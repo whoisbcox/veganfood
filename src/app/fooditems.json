@@ -1,0 +1,162 @@
+[
+  {
+    "id": 1,
+    "name": "Vegan Pancakes",
+    "description": "Fluffy vegan pancakes with maple syrup and fresh berries.",
+    "price": 9.99,
+    "type": "brunch",
+    "image": "vegan_pancakes.jpg"
+  },
+  {
+    "id": 2,
+    "name": "Avocado Toast",
+    "description": "Toasted sourdough topped with mashed avocado, cherry tomatoes, and hemp seeds.",
+    "price": 8.99,
+    "type": "brunch",
+    "image": "avocado_toast.jpg"
+  },
+  {
+    "id": 3,
+    "name": "Tofu Scramble",
+    "description": "Seasoned tofu scramble with mixed veggies and whole grain toast.",
+    "price": 10.99,
+    "type": "brunch",
+    "image": "tofu_scramble.jpg"
+  },
+  {
+    "id": 4,
+    "name": "Chia Pudding",
+    "description": "Chia pudding with almond milk, topped with fresh fruit and granola.",
+    "price": 7.99,
+    "type": "brunch",
+    "image": "chia_pudding.jpg"
+  },
+  {
+    "id": 5,
+    "name": "Vegan French Toast",
+    "description": "Delicious French toast made with vegan ingredients, served with berries and syrup.",
+    "price": 10.49,
+    "type": "brunch",
+    "image": "vegan_french_toast.jpg"
+  },
+  {
+    "id": 6,
+    "name": "Smoothie Bowl",
+    "description": "Acai smoothie bowl topped with granola, coconut flakes, and fresh fruit.",
+    "price": 9.49,
+    "type": "brunch",
+    "image": "smoothie_bowl.jpg"
+  },
+  {
+    "id": 7,
+    "name": "Vegan Burger",
+    "description": "Juicy vegan burger with lettuce, tomato, and vegan cheese, served with fries.",
+    "price": 12.99,
+    "type": "dinner",
+    "image": "vegan_burger.jpg"
+  },
+  {
+    "id": 8,
+    "name": "Stuffed Bell Peppers",
+    "description": "Bell peppers stuffed with quinoa, black beans, and veggies, served with a side salad.",
+    "price": 11.99,
+    "type": "dinner",
+    "image": "stuffed_bell_peppers.jpg"
+  },
+  {
+    "id": 9,
+    "name": "Vegan Lasagna",
+    "description": "Layered vegan lasagna with tofu ricotta, marinara sauce, and vegetables.",
+    "price": 13.99,
+    "type": "dinner",
+    "image": "vegan_lasagna.jpg"
+  },
+  {
+    "id": 10,
+    "name": "Mushroom Risotto",
+    "description": "Creamy vegan mushroom risotto with fresh herbs and a hint of truffle oil.",
+    "price": 14.99,
+    "type": "dinner",
+    "image": "mushroom_risotto.jpg"
+  },
+  {
+    "id": 11,
+    "name": "Chickpea Curry",
+    "description": "Flavorful chickpea curry served with basmati rice and naan bread.",
+    "price": 12.49,
+    "type": "dinner",
+    "image": "chickpea_curry.jpg"
+  },
+  {
+    "id": 12,
+    "name": "Grilled Portobello",
+    "description": "Grilled portobello mushrooms with garlic, rosemary, and a side of roasted vegetables.",
+    "price": 13.49,
+    "type": "dinner",
+    "image": "grilled_portobello.jpg"
+  },
+  {
+    "id": 13,
+    "name": "Lentil Stew",
+    "description": "Hearty lentil stew with root vegetables and a side of crusty bread.",
+    "price": 11.49,
+    "type": "dinner",
+    "image": "lentil_stew.jpg"
+  },
+  {
+    "id": 14,
+    "name": "Vegan Pizza",
+    "description": "Thin-crust vegan pizza with tomato sauce, vegan cheese, and assorted veggies.",
+    "price": 14.49,
+    "type": "dinner",
+    "image": "vegan_pizza.jpg"
+  },
+  {
+    "id": 15,
+    "name": "Green Smoothie",
+    "description": "Refreshing smoothie with spinach, banana, apple, and a hint of ginger.",
+    "price": 6.99,
+    "type": "drink",
+    "image": "green_smoothie.jpg"
+  },
+  {
+    "id": 16,
+    "name": "Almond Milk Latte",
+    "description": "Creamy almond milk latte with a shot of espresso.",
+    "price": 4.99,
+    "type": "drink",
+    "image": "almond_milk_latte.jpg"
+  },
+  {
+    "id": 17,
+    "name": "Matcha Latte",
+    "description": "Smooth and earthy matcha latte made with oat milk.",
+    "price": 5.49,
+    "type": "drink",
+    "image": "matcha_latte.jpg"
+  },
+  {
+    "id": 18,
+    "name": "Berry Smoothie",
+    "description": "Mixed berry smoothie with strawberries, blueberries, and raspberries.",
+    "price": 6.49,
+    "type": "drink",
+    "image": "berry_smoothie.jpg"
+  },
+  {
+    "id": 19,
+    "name": "Herbal Tea",
+    "description": "A selection of herbal teas including chamomile, peppermint, and hibiscus.",
+    "price": 3.99,
+    "type": "drink",
+    "image": "herbal_tea.jpg"
+  },
+  {
+    "id": 20,
+    "name": "Coconut Water",
+    "description": "Hydrating coconut water served chilled.",
+    "price": 4.49,
+    "type": "drink",
+    "image": "coconut_water.jpg"
+  }
+]
