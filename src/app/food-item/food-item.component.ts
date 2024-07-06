@@ -6,12 +6,12 @@ import { FoodItem } from '../food-item';
   standalone: true,
   imports: [],
   template: `
-    <section class="food-item">
-      <img class="food-item__img" [src]="foodItem.image" alt="Photo of {{foodItem.name}}">
+    <div class="food-item">
+      <img class="food-item__img" src="" alt="Photo of {{foodItem.name}}">
       <h2 class="food-item__title">{{foodItem.name}}</h2>
       <p class="food-item__desc">{{foodItem.description}}</p>
       <p class="food-item__price">{{foodItem.price}}</p>
-    </section>
+    </div>
   `,
   styleUrl: './food-item.component.css'
 })

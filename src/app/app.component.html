@@ -1,10 +1,15 @@
 <main>
   <header class="header">
     <h1>Vegan Food</h1>
+    <nav>
+      <ul>
+        <li><a routerLink="/">Home</a></li>
+        <li><a routerLink="/menu">Menu</a></li>
+        <li><a routerLink="/cart">Cart</a></li>
+      </ul>
+    </nav>
   </header>
   <section class="content">
-    <app-home></app-home>
+    <router-outlet />
   </section>
 </main>
-
-<router-outlet />
