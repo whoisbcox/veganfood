@@ -11,6 +11,7 @@ import { FoodItem } from '../food-item';
       <h2 class="food-item__title">{{foodItem.name}}</h2>
       <p class="food-item__desc">{{foodItem.description}}</p>
       <p class="food-item__price">{{foodItem.price}}</p>
+      <a href="#">Add to Order</a>
     </div>
   `,
   styleUrl: './food-item.component.css'
