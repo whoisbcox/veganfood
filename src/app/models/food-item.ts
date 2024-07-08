@@ -6,3 +6,4 @@ export interface FoodItem {
   type: string,
   image: string
 }
+

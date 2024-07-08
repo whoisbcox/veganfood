@@ -1,8 +1,8 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { FoodService } from '../food.service';
-import { FoodItem } from '../food-item';
-import { FoodItemComponent } from '../food-item/food-item.component';
+import { FoodService } from '../../services/food.service';
+import { FoodItem } from '../../models/food-item';
+import { FoodItemComponent } from '../../components/food-item/food-item.component';
 
 @Component({
   selector: 'app-menus',
@@ -30,15 +30,28 @@ import { FoodItemComponent } from '../food-item/food-item.component';
   `,
   styleUrl: './menus.component.css'
 })
-export class MenusComponent {
+export class MenusComponent implements OnInit {
   brunchItemList: FoodItem[] = [];
   dinnerItemList: FoodItem[] = [];
   drinksItemList: FoodItem[] = [];
   foodService: FoodService = inject(FoodService);
 
-  constructor() {
-    this.brunchItemList = this.foodService.getFoodItemsByType('brunch');
-    this.dinnerItemList = this.foodService.getFoodItemsByType('dinner');
-    this.drinksItemList = this.foodService.getFoodItemsByType('drinks');
+  constructor() {}
+
+  ngOnInit(): void {
+    this.fetchFoodItemsByType('brunch', items => this.brunchItemList = items);
+    this.fetchFoodItemsByType('dinner', items => this.dinnerItemList = items);
+    this.fetchFoodItemsByType('drinks', items => this.drinksItemList = items);
+  }
+
+  fetchFoodItemsByType(type: string, callback: (items: FoodItem[]) => void): void {
+    this.foodService.getFoodItemsByType(type).subscribe(
+      (items: FoodItem[]) => {
+        callback(items);
+      },
+      (error: any) => {
+        console.error(`Error fetching ${type} items`, error);
+      }
+    );
   }
 }

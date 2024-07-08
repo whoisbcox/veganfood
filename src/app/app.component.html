@@ -8,8 +8,22 @@
         <li><a routerLink="/order">Cart</a></li>
       </ul>
     </nav>
+    @for(order of order$ | async; track order.id) {
+      <div>{{order}}</div>
+    }
   </header>
   <section class="content">
     <router-outlet />
   </section>
 </main>
+
+<aside>
+  <h2>Your Order</h2>
+  @for(order of order$ | async; track order.key) {
+    <div>
+      <img src="" alt="Photo of {{order.name}}">
+      <div>{{ order.name }} - {{ order.price }} x {{ order.quantity }} = {{ order.total }}</div>
+      <div>{{ order.description }}</div>
+    </div>
+  }
+</aside>

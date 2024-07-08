@@ -1,10 +1,10 @@
-import { Component, inject } from '@angular/core';
-import { FoodItemComponent } from '../food-item/food-item.component';
-import { LocationComponent } from '../location/location.component';
-import { FoodItem } from '../food-item';
-import { Location } from '../location';
-import { FoodService } from '../food.service';
-import { LocationService } from '../location.service';
+import { Component, OnInit, inject } from '@angular/core';
+import { FoodItemComponent } from '../../components/food-item/food-item.component';
+import { LocationComponent } from '../../components/location/location.component';
+import { FoodItem } from '../../models/food-item';
+import { Location } from '../../models/location';
+import { FoodService } from '../../services/food.service';
+import { LocationService } from '../../services/location.service';
 
 @Component({
   selector: 'app-home',
@@ -53,14 +53,25 @@ import { LocationService } from '../location.service';
   `,
   styleUrl: './home.component.css'
 })
-export class HomeComponent {
+export class HomeComponent implements OnInit {
   featuredItemList: FoodItem[] = [];
   locations: Location[] = [];
   foodService: FoodService = inject(FoodService);
   locationService: LocationService = inject(LocationService);
 
   constructor() {
-    this.featuredItemList = this.foodService.getFoodItemsByIds([1, 6, 7, 15]);
+    // this.featuredItemList = this.foodService.getFoodItemsByIds([1, 6, 7, 15]);
     this.locations = this.locationService.getAllLocations();    
+  }
+
+  ngOnInit(): void {
+    this.foodService.getFoodItemsByIds([1, 6, 7, 15]).subscribe(
+      (items: FoodItem[]) => {
+        this.featuredItemList = items;
+      },
+      (error: any) => {
+        console.error('Error fetching food items', error);
+      }
+    );
   }
 }
