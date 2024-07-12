@@ -7,10 +7,8 @@
         <li><a routerLink="/menu">Menu</a></li>
         <li><a routerLink="/order">Cart</a></li>
       </ul>
+      <div>{{quantity$ | async}}</div>
     </nav>
-    @for(order of order$ | async; track order.id) {
-      <div>{{order}}</div>
-    }
   </header>
   <section class="content">
     <router-outlet />
@@ -26,4 +24,7 @@
       <div>{{ order.description }}</div>
     </div>
   }
+  <div>Subtotal: {{subtotal}}</div>
+  <div>Sales Tax (7.25%): {{salesTax}}</div>
+  <div>Total ($/USD): {{total}}</div>
 </aside>

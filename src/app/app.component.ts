@@ -1,10 +1,10 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { AsyncPipe} from "@angular/common";
 import { RouterLink, RouterOutlet } from '@angular/router';
-import { Store } from '@ngrx/store';
-import { Observable, map } from 'rxjs';
+import { Store, select } from '@ngrx/store';
+import { Observable, Subscription, map } from 'rxjs';
 import { FoodItemApiActions } from './store/actions/food-item.actions';
-import { selectTransformedOrder } from './store/selectors/order.selectors';
+import { selectOrderSubTotal, selectOrderTotalQuantity, selectTransformedOrder } from './store/selectors/order.selectors';
 import { AppState } from './models/app.state';
 import { HomeComponent } from './layouts/home/home.component';
 import { OrderItem } from './models/order-item';
@@ -17,26 +17,51 @@ import { FoodItem } from './models/food-item';
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
-export class AppComponent implements OnInit {
+export class AppComponent implements OnInit, OnDestroy {
   title = 'veganfood';
-  // private store = inject(Store);
+  salesTaxPercent: number;
   foodItems$: Observable<FoodItem[]>;
   order$?: Observable<OrderItem[]>;
-  total$?: Observable<number>;
+  quantity$?: Observable<number>;
+  subtotal: number;
+  total: string;
+  salesTax: string;
+  subtotalSub$: Subscription | undefined;
 
   constructor(private store: Store<AppState>) {
     this.foodItems$ = this.store.select(state => state.foodItems.foodItems);
     this.order$ = this.store.select(selectTransformedOrder);
-    this.total$ = this.order$.pipe(
-      map((items: OrderItem[]) => items.reduce((acc, item) => acc + item.total, 0))
-    );
+    this.quantity$ = this.store.select(selectOrderTotalQuantity);
+    this.salesTaxPercent = 0.0725;
+    this.salesTax = '0';
+    this.subtotal = 0;
+    this.total = '0';
   }
 
   ngOnInit() {
     this.store.dispatch(FoodItemApiActions.loadFoodItems());
-    this.order$ = this.store.select(selectTransformedOrder);
-    this.total$ = this.order$.pipe(
-      map(items => items.reduce((acc, item) => acc + item.total, 0))
-    );
+    this.subtotalSub$ = this.store.pipe(select(selectOrderSubTotal)).subscribe((st: number) => {
+      this.subtotal = parseFloat((st).toFixed(2));
+      this.salesTax = this.formatAsUSD(this.calculateTax(this.subtotal, this.salesTaxPercent));
+      this.total = this.formatAsUSD(this.calculateTotal(this.subtotal, this.salesTaxPercent));
+    });
+  }
+
+  ngOnDestroy() {
+    if (this.subtotalSub$) {
+      this.subtotalSub$.unsubscribe();
+    }
+  }
+
+  calculateTax(amount: number, taxPercent: number) {
+    return taxPercent * amount;
+  };
+
+  calculateTotal(amount: number, taxPercent: number) {
+    return parseFloat((amount + this.calculateTax(amount, taxPercent)).toFixed(2));
+  };
+
+  formatAsUSD(amount: number): string {
+    return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(amount);
   }
 }

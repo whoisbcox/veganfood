@@ -14,7 +14,7 @@ export const selectTransformedOrder = createSelector(
     const orderMap = new Map<number, OrderItem>();
 
     order.forEach(id => {
-      console.log(id);
+      // console.log(id);
       if (orderMap.has(id)) {
         const existingItem = orderMap.get(id)!;
         existingItem.quantity += 1;
@@ -34,6 +34,23 @@ export const selectTransformedOrder = createSelector(
     return Array.from(orderMap.values()).map((item, index) => ({ ...item, key: `${item.id}-${index}` }));
   }
 );
+
+// Selector to compute the total amount of the transformed order
+export const selectOrderSubTotal = createSelector(
+  selectTransformedOrder,
+  (transformedOrder: OrderItem[]) => {
+    return transformedOrder.reduce((acc, item) => acc + item.total, 0);
+  }
+);
+
+// Selector to compute the total quantity of the transformed order
+export const selectOrderTotalQuantity = createSelector(
+  selectTransformedOrder,
+  (transformedOrder: OrderItem[]) => {
+    return transformedOrder.reduce((acc, item) => acc + item.quantity, 0);
+  }
+);
+
 function useSelector(selectFoodItems: (state: AppState) => FoodItem[]) {
   throw new Error('Function not implemented.');
 }
