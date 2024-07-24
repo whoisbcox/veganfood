@@ -54,7 +54,7 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   submitOrder() {
-    fetch('create-checkout-session', {
+    fetch('api/create-checkout-session', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
