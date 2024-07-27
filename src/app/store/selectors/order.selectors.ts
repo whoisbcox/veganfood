@@ -10,8 +10,8 @@ const selectOrder = (state: AppState) => state.order;
 export const selectTransformedOrder = createSelector(
   selectFoodItems,
   selectOrder,
-  (foodItems: FoodItemState, order: number[]) => {
-    const orderMap = new Map<number, OrderItem>();
+  (foodItems: FoodItemState, order: string[]) => {
+    const orderMap = new Map<string, OrderItem>();
 
     order.forEach(id => {
       // console.log(id);
@@ -21,7 +21,7 @@ export const selectTransformedOrder = createSelector(
         existingItem.total += existingItem.price;
       } else {
         const { foodItems: items} = foodItems;
-        const foodItem = items.find(item => item.id === id);
+        const foodItem = items.find(item => item._id === id);
         if (foodItem) {
           orderMap.set(id, {
             ...foodItem, quantity: 1, total: foodItem.price,
@@ -31,7 +31,15 @@ export const selectTransformedOrder = createSelector(
       }
     });
 
-    return Array.from(orderMap.values()).map((item, index) => ({ ...item, key: `${item.id}-${index}` }));
+    return Array.from(orderMap.values()).map((item, index) => ({ ...item, key: `${item._id}-${index}` }));
+  }
+);
+
+// Selector to compute the total amount of the transformed order
+export const selectOrderItems = createSelector(
+  selectTransformedOrder,
+  (transformedOrder: OrderItem[]) => {
+    return transformedOrder.map(item => {item._id, { quantity: item.quantity, price: item.price}});
   }
 );
 
