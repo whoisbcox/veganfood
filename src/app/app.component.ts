@@ -9,6 +9,7 @@ import { AppState } from './models/app.state';
 import { HomeComponent } from './layouts/home/home.component';
 import { OrderItem } from './models/order-item';
 import { FoodItem } from './models/food-item';
+import { environment } from '../environments/environment';
 
 @Component({
   selector: 'app-root',
@@ -54,7 +55,7 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   submitOrder() {
-    fetch('api/create-checkout-session', {
+    fetch(`${environment.apiUrl}/create-checkout-session`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

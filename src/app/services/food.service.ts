@@ -2,15 +2,16 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { FoodItem } from '../models/food-item';
+import { environment } from '../../environments/environment';
 
 
 @Injectable({
   providedIn: 'root'
 })
 export class FoodService {
-  private apiUrl = '/api/food-items';
+  private apiUrl = `${environment.apiUrl}/food-items`;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   getAllFoodItems() : Observable<FoodItem[]> {
     return this.http.get<FoodItem[]>(this.apiUrl);

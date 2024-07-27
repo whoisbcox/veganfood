@@ -43,3 +43,7 @@ Thumbs.db
 
 # Custom
 .env
+
+# Environment files
+src/environments/environment.ts
+src/environments/environment.development.ts

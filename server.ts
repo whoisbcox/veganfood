@@ -8,8 +8,12 @@ import { env } from 'process';
 import Stripe from 'stripe';
 import { createRequire } from 'module';
 const require = createRequire(import.meta.url);
+const cors = require('cors');
+const dotenv = require('dotenv');
 const mongoose = require('mongoose');
 const { model, Schema } = mongoose;
+
+dotenv.config();
 
 // Define schema for item collection
 const itemSchema = new Schema({
@@ -49,6 +53,7 @@ export function app(): express.Express {
 
   // Parse JSON bodies
   server.use(express.json());
+  server.use(cors());
 
   // Example Express Rest API endpoints
   // server.get('/api/**', (req, res) => { });
