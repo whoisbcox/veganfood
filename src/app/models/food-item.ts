@@ -1,4 +1,5 @@
 export interface FoodItem {
+  _id: string,
   id: number,
   name: string,
   description: string,

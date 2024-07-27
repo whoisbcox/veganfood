@@ -9,10 +9,10 @@ import Stripe from 'stripe';
 import { createRequire } from 'module';
 const require = createRequire(import.meta.url);
 const mongoose = require('mongoose');
-const { model, Document } = mongoose;
+const { model, Schema } = mongoose;
 
 // Define schema for item collection
-const itemSchema = new mongoose.Schema({
+const itemSchema = new Schema({
   id: { type: Number, required: true },
   name: { type: String, required: true },
   description: { type: String, required: true },
@@ -56,7 +56,22 @@ export function app(): express.Express {
   server.get('/api/food-items', async (req, res) => {
     console.log('Fetching food items...');
     try {
-      const items = await Item.find();
+      const { type, ids } = req.query;
+      let filter: any = {};
+
+      if (type) {
+        filter.type = type;
+      }
+
+      if (ids) {
+        const idsArray = (ids as string).split(',').map(id => new mongoose.Types.ObjectId(id));
+        filter._id = { $in: idsArray };
+      }
+
+      console.log(filter);
+
+      const items = await Item.find(filter);
+      // const items = await Item.find();
       res.status(200).json(items);
     } catch (error) {
       console.error('Error fetching items:', error);

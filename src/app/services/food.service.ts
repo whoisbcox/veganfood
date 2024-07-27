@@ -1,26 +1,27 @@
 import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { FoodItem } from '../models/food-item';
-import foodItems from '../db/fooditems.json';
 
 
 @Injectable({
   providedIn: 'root'
 })
 export class FoodService {
-  protected foodItemList: FoodItem[] = foodItems;
+  private apiUrl = '/api/food-items';
 
-  constructor() { }
+  constructor(private http: HttpClient) { }
 
   getAllFoodItems() : Observable<FoodItem[]> {
-    return of(this.foodItemList);
+    return this.http.get<FoodItem[]>(this.apiUrl);
   }
 
-  getFoodItemsByType(type: String): Observable<FoodItem[]> {
-    return of(this.foodItemList.filter(item => item.type === type));
+  getFoodItemsByType(type: string): Observable<FoodItem[]> {
+    return this.http.get<FoodItem[]>(`${this.apiUrl}?type=${type}`);
   }
 
-  getFoodItemsByIds(filterArray: number[]): Observable<FoodItem[]> {
-    return of(this.foodItemList.filter(item => filterArray.includes(item.id)));
+  getFoodItemsByIds(filterArray: string[]): Observable<FoodItem[]> {
+    const ids = filterArray.join(',');
+    return this.http.get<FoodItem[]>(`${this.apiUrl}?ids=${ids}`);
   }
 }

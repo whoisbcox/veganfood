@@ -6,6 +6,7 @@ import { provideStore } from '@ngrx/store';
 import { provideEffects } from '@ngrx/effects';
 import { reducers, metaReducers } from './store/reducers';
 import { FoodItemEffects } from './store/effects/food-item.effects';
+import { provideHttpClient, withFetch } from '@angular/common/http';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -13,6 +14,9 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes),
     provideClientHydration(),
     provideStore(reducers, { metaReducers }),
-    provideEffects(FoodItemEffects)
+    provideEffects(FoodItemEffects),
+    provideHttpClient(
+      withFetch(),
+    )
 ]
 };

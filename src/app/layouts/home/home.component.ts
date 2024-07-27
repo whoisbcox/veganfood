@@ -65,7 +65,11 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.foodService.getFoodItemsByIds([1, 6, 7, 15]).subscribe(
+    this.foodService.getFoodItemsByIds([
+      '669d875371af99936b1a5f89',
+      '669d875371af99936b1a5f8e',
+      '669d875371af99936b1a5f8f',
+      '669d875371af99936b1a5f97']).subscribe(
       (items: FoodItem[]) => {
         this.featuredItemList = items;
       },
