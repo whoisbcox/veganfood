@@ -11,19 +11,19 @@ import { FoodItemComponent } from '../../components/food-item/food-item.componen
   template: `
     <section>
       <h2>Brunch</h2>
-      @for(brunchItem of brunchItemList; track brunchItem.id) {
+      @for(brunchItem of brunchItemList; track brunchItem._id) {
         <app-food-item [foodItem]="brunchItem"></app-food-item>
       }
     </section>
     <section>
       <h2>Dinner</h2>
-      @for(dinnerItem of dinnerItemList; track dinnerItem.id) {
+      @for(dinnerItem of dinnerItemList; track dinnerItem._id) {
         <app-food-item [foodItem]="dinnerItem"></app-food-item>
       }
     </section>
     <section>
       <h2>Drinks</h2>
-      @for(drinksItem of drinksItemList; track drinksItem.id) {
+      @for(drinksItem of drinksItemList; track drinksItem._id) {
         <app-food-item [foodItem]="drinksItem"></app-food-item>
       }
     </section>

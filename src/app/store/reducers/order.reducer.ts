@@ -1,7 +1,7 @@
 import { createReducer, on } from '@ngrx/store';
 import { FoodItemActions } from '../../store/actions/order.actions';
 
-export type CodecState = number[];
+export type CodecState = string[];
 
 export const initialState: CodecState = [];
 

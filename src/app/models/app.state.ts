@@ -3,5 +3,5 @@ import { FoodItem } from "./food-item";
 
 export interface AppState {
   foodItems: FoodItemState;
-  order: number[];
+  order: string[];
 }

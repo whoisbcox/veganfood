@@ -18,8 +18,8 @@ import { LocationService } from '../../services/location.service';
     </section>
     <section class="results">
       <h2>Featured Items</h2>
-      @for (drinksItem of featuredItemList; track drinksItem.id) {
-        <app-food-item [foodItem]="drinksItem"></app-food-item>
+      @for (featuredItem of featuredItemList; track featuredItem._id) {
+        <app-food-item [foodItem]="featuredItem"></app-food-item>
       }
       <ul class="payment-types">
         <li class="payment-type__applepay"><a href="#"></a></li>

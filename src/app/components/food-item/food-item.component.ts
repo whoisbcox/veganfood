@@ -14,7 +14,7 @@ import { FoodItemActions } from '../../store/actions/order.actions';
       <h2 class="food-item__title">{{foodItem.name}}</h2>
       <p class="food-item__desc">{{foodItem.description}}</p>
       <p class="food-item__price">{{foodItem.price}}</p>
-      <button (click)="foodItemAdded(foodItem.id)">Add to Order</button>
+      <button (click)="foodItemAdded(foodItem._id)">Add to Order</button>
     </div>
   `,
   styleUrl: './food-item.component.css'
@@ -29,11 +29,11 @@ export class FoodItemComponent {
     this.order$ = this.store.select('order');
   }
 
-  foodItemAdded(foodItemID: number) {
+  foodItemAdded(foodItemID: string) {
     this.store.dispatch(FoodItemActions.foodItemAdded({foodItemID}));
   }
   
-  foodItemRemoved(foodItemID: number) {
+  foodItemRemoved(foodItemID: string) {
     this.store.dispatch(FoodItemActions.foodItemRemoved({foodItemID}));
   }
 }
