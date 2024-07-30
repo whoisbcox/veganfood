@@ -22,6 +22,8 @@
     "@angular/platform-server": "^18.0.0",
     "@angular/router": "^18.0.0",
     "@angular/ssr": "^18.0.6",
+    "@cloudinary/ng": "^2.0.2",
+    "@cloudinary/url-gen": "^1.19.0",
     "@ngrx/effects": "^18.0.1",
     "@ngrx/store": "^18.0.1",
     "cors": "^2.8.5",

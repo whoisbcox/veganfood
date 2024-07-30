@@ -5,13 +5,20 @@ import { FoodItem } from '../../models/food-item';
 import { Location } from '../../models/location';
 import { FoodService } from '../../services/food.service';
 import { LocationService } from '../../services/location.service';
+import { CloudinaryModule } from '@cloudinary/ng';
+import { Cloudinary, CloudinaryImage } from '@cloudinary/url-gen';
+import { fill, scale } from "@cloudinary/url-gen/actions/resize";
+import { environment } from '../../../environments/environment';
+import { format, quality } from '@cloudinary/url-gen/actions/delivery';
+import { auto } from '@cloudinary/url-gen/qualifiers/quality';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [FoodItemComponent, LocationComponent],
+  imports: [FoodItemComponent, LocationComponent, CloudinaryModule],
   template: `
     <section>
+      <advanced-image [cldImg]="heroImg"></advanced-image>
       <h1>Headline</h1>
       <p>Description text</p>
       <a href="">Order Now</a>
@@ -30,6 +37,7 @@ import { LocationService } from '../../services/location.service';
       </ul>
     </section>
     <section>
+      <advanced-image [cldImg]="locationImg"></advanced-image>
       <h2>Locations</h2>
       @for (location of locations; track location.id) {
         <app-location [location]="location"></app-location>
@@ -55,21 +63,37 @@ import { LocationService } from '../../services/location.service';
 })
 export class HomeComponent implements OnInit {
   featuredItemList: FoodItem[] = [];
+  featuredIds: string[] = [];
   locations: Location[] = [];
   foodService: FoodService = inject(FoodService);
   locationService: LocationService = inject(LocationService);
+  heroImg!: CloudinaryImage;
+  locationImg!: CloudinaryImage;
 
   constructor() {
-    // this.featuredItemList = this.foodService.getFoodItemsByIds([1, 6, 7, 15]);
-    this.locations = this.locationService.getAllLocations();    
-  }
-
-  ngOnInit(): void {
-    this.foodService.getFoodItemsByIds([
+    this.locations = this.locationService.getAllLocations();
+    this.featuredIds = [ 
       '669d875371af99936b1a5f89',
       '669d875371af99936b1a5f8e',
       '669d875371af99936b1a5f8f',
-      '669d875371af99936b1a5f97']).subscribe(
+      '669d875371af99936b1a5f97'
+    ];    
+  }
+
+  ngOnInit(): void {
+    const cld = new Cloudinary({ cloud: { cloudName: environment.cloudName } });
+    
+    this.heroImg = cld.image('veganfood/ejs5nk3j6abpi7kgzf1n');
+    this.heroImg.resize(fill().width(2400).height(1600))
+      .delivery(quality(auto()))
+      .delivery(format(auto()));
+    
+    this.locationImg = cld.image('veganfood/hbbk3fb2iqf4c1jtpct9');
+    this.locationImg.resize(fill().width(2400).height(1600))
+      .delivery(quality(auto()))
+      .delivery(format(auto()));
+
+    this.foodService.getFoodItemsByIds(this.featuredIds).subscribe(
       (items: FoodItem[]) => {
         this.featuredItemList = items;
       },
