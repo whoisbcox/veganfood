@@ -28,11 +28,6 @@ const itemSchema = new Schema({
 // Create mongoose model
 const Item = model('Item', itemSchema);
 
-const storeItems = new Map([
-  [1, {priceInCents: 1000, name: 'Vegan Pancakes'}],
-  [2, {priceInCents: 1500, name: 'Tofu Scramble'}],
-]);
-
 // Import Stripe library
 const stripeApiKey: string = env['STRIPE_PRIVATE_KEY'] as string;
 const stripe = new Stripe(stripeApiKey, {
@@ -51,9 +46,10 @@ export function app(): express.Express {
   server.set('view engine', 'html');
   server.set('views', browserDistFolder);
 
+  server.use(cors());
+  
   // Parse JSON bodies
   server.use(express.json());
-  server.use(cors());
 
   // Example Express Rest API endpoints
   // server.get('/api/**', (req, res) => { });
@@ -87,29 +83,52 @@ export function app(): express.Express {
   // Define the Stripe checkout endpoint
   server.post('/api/create-checkout-session', async (req, res) => {
     try {
-      const session = await stripe.checkout.sessions.create({
-        line_items: req.body.items.map((item: { quantity: number; id: number; }) => {
-          const storeItem = storeItems.get(item.id);
-          return {
-            price_data: {
-              currency: 'usd',
-              product_data: {
-                name: storeItem?.name
-              },
-              unit_amount: storeItem?.priceInCents
+      const items = req.body;
+      
+      if (!items) {
+        return res.status(400).json({ error: 'Invalid request: items array is required' });
+      }
+  
+      // Fetch item details from the database
+      const itemDetails = await Item.find({ _id: { $in: items.map((item: { _id: string; quantity: number }) => item._id) } });
+  
+      if (itemDetails.length !== items.length) {
+        return res.status(400).json({ error: 'Some items not found in the database' });
+      }
+
+      // Create line items for Stripe
+      const lineItems = items.map((item: { _id: string; quantity: any; }) => {
+        const itemDetail = itemDetails.find((detail: { _id: string }) => detail._id.toString() === item._id);
+
+        if (!itemDetail) {
+          throw new Error(`Item with ID ${item._id} not found`);
+        }
+
+        return {
+          price_data: {
+            currency: 'usd',
+            product_data: {
+              name: itemDetail.name,
             },
-            quantity: item.quantity,
-          }
-        }),
+            unit_amount: itemDetail.price * 100, // Convert price to cents
+          },
+          quantity: item.quantity,
+          tax_rates: [ env['TAX_RATE_ID'] ]
+        };
+      });
+      
+      
+      const session = await stripe.checkout.sessions.create({
+        line_items: lineItems,
         mode: 'payment',
         success_url: `${req.protocol}://${req.get('host')}?success=true`,
-        cancel_url: `${req.protocol}://${req.get('host')}?canceled=true`,
+        cancel_url: `${req.protocol}://${req.get('host')}?canceled=true`
       });
 
-      res.json({ url: session.url });
+      return res.json({ url: session.url });
     } catch (error) {
       const errorMessage = error instanceof Error ? error.message : 'Unknown error';
-      res.status(500).send(errorMessage);
+      return res.status(500).send(errorMessage);
     }
   });
 

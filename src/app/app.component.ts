@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { AsyncPipe} from "@angular/common";
 import { RouterLink, RouterOutlet } from '@angular/router';
 import { Store, select } from '@ngrx/store';
-import { Observable, Subscription, map } from 'rxjs';
+import { Observable, Subscription, map, take } from 'rxjs';
 import { FoodItemApiActions } from './store/actions/food-item.actions';
 import { selectOrderSubTotal, selectOrderTotalQuantity, selectTransformedOrder } from './store/selectors/order.selectors';
 import { AppState } from './models/app.state';
@@ -55,24 +55,26 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   submitOrder() {
-    fetch(`${environment.apiUrl}/create-checkout-session`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        items: [
-          { id: 1, quantity: 3 },
-          { id: 2, quantity: 1 }
-        ]
-      })
-    }).then(res => {
-      if (res.ok) return res.json();
-      return res.json().then(json => Promise.reject(json));
-    }).then(({ url }) => {
-      window.location = url;
-    }).catch(e => {
-      console.log(e.error)
+    this.order$?.pipe(take(1)).subscribe(orderItems => {
+      const items = orderItems.map(item => ({
+        _id: item._id,
+        quantity: item.quantity
+      }));
+      
+      fetch(`${environment.apiUrl}/create-checkout-session`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(items)
+      }).then(res => {
+        if (res.ok) return res.json();
+        return res.json().then(json => Promise.reject(json));
+      }).then(({ url }) => {
+        window.location = url;
+      }).catch(e => {
+        console.log(e.error)
+      });
     });
   }
 
