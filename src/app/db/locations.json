@@ -1,42 +1,42 @@
 [
   {
     "id": 1,
-    "name": "Green Bamboo Eatery",
+    "name": "San Francisco, CA",
     "address": "123 Bamboo Street, San Francisco, CA",
     "openTime": "09:00 AM",
     "closeTime": "09:00 PM"
   },
   {
     "id": 2,
-    "name": "Lotus Garden",
+    "name": "Los Angeles, CA",
     "address": "456 Lotus Avenue, Los Angeles, CA",
     "openTime": "10:00 AM",
     "closeTime": "10:00 PM"
   },
   {
     "id": 3,
-    "name": "Zen Veggie Haven",
+    "name": "Seattle, WA",
     "address": "789 Zen Road, Seattle, WA",
     "openTime": "08:00 AM",
     "closeTime": "08:00 PM"
   },
   {
     "id": 4,
-    "name": "Harmony House",
+    "name": "Portland, OR",
     "address": "101 Harmony Blvd, Portland, OR",
     "openTime": "11:00 AM",
     "closeTime": "11:00 PM"
   },
   {
     "id": 5,
-    "name": "Peaceful Palate",
+    "name": "Austin, TX",
     "address": "202 Peace Street, Austin, TX",
     "openTime": "07:00 AM",
     "closeTime": "07:00 PM"
   },
   {
     "id": 6,
-    "name": "Blossom Bistro",
+    "name": "New York, NY",
     "address": "303 Blossom Lane, New York, NY",
     "openTime": "06:00 AM",
     "closeTime": "06:00 PM"
