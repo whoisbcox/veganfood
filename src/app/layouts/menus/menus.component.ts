@@ -9,23 +9,35 @@ import { FoodItemComponent } from '../../components/food-item/food-item.componen
   standalone: true,
   imports: [FoodItemComponent],
   template: `
-    <section>
-      <h2>Brunch</h2>
-      @for(brunchItem of brunchItemList; track brunchItem._id) {
-        <app-food-item [foodItem]="brunchItem"></app-food-item>
-      }
+    <section class="">
+      <div class="container mx-auto py-16">
+        <h2 class="mb-12 font-display text-7xl text-green text-center">Brunch</h2>
+        <div class="grid grid-cols-2 gap-12">
+          @for(brunchItem of brunchItemList; track brunchItem._id) {
+            <app-food-item [foodItem]="brunchItem"></app-food-item>
+          }
+        </div>
+      </div>
     </section>
-    <section>
-      <h2>Dinner</h2>
-      @for(dinnerItem of dinnerItemList; track dinnerItem._id) {
-        <app-food-item [foodItem]="dinnerItem"></app-food-item>
-      }
+    <section class="bg-red-dark">
+      <div class="container mx-auto py-16">
+        <h2 class="mb-12 font-display text-7xl text-yellow-light text-center">Dinner</h2>
+        <div class="grid grid-cols-2 gap-12">
+          @for(dinnerItem of dinnerItemList; track dinnerItem._id) {
+            <app-food-item [foodItem]="dinnerItem"></app-food-item>
+          }
+        </div>
+      </div>
     </section>
-    <section>
-      <h2>Drinks</h2>
-      @for(drinksItem of drinksItemList; track drinksItem._id) {
-        <app-food-item [foodItem]="drinksItem"></app-food-item>
-      }
+    <section class="bg-deep-blue">
+      <div class="container mx-auto py-16">
+        <h2 class="mb-12 font-display text-7xl text-green text-center">Drinks</h2>
+        <div class="grid grid-cols-2 gap-12">
+          @for(drinksItem of drinksItemList; track drinksItem._id) {
+            <app-food-item [foodItem]="drinksItem"></app-food-item>
+          }
+        </div>
+      </div>
     </section>
   `,
   styleUrl: './menus.component.css'

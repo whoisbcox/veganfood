@@ -6,9 +6,9 @@ import { Location } from '../../models/location';
   standalone: true,
   imports: [],
   template: `
-    <div>
-      <h3>{{location.name}}</h3>
-      <h4>{{location.address}}</h4>
+    <div class="text-center">
+      <h3 class="font-display text-4xl">{{location.name}}</h3>
+      <h4 class="font-serif text-2xl">{{location.address}}</h4>
       <p>Hours: {{location.openTime}} &ndash; {{location.closeTime}}</p>
     </div>
   `,

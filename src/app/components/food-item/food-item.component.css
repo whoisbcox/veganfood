@@ -1,0 +1,3 @@
+.food-item__img ::ng-deep img {
+  @apply object-cover;
+}
