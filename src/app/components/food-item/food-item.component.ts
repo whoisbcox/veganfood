@@ -33,7 +33,6 @@ export class FoodItemComponent {
   @Input() foodItem!: FoodItem;
   private store = inject(Store);
   order$?: Observable<object>;
-  title = 'veganfood';
   img!: CloudinaryImage;
   
   constructor() {

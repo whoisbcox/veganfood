@@ -15,78 +15,35 @@ import { environment } from '../environments/environment';
   selector: 'app-root',
   standalone: true,
   imports: [HomeComponent, RouterLink, RouterOutlet, AsyncPipe],
-  templateUrl: './app.component.html',
+  template: `
+    <main>
+    <header class="flex fixed justify-between md:items-center top-0 left-0 right-0 z-10 p-4 bg-deep-blue text-off-white">
+      <h1 class="font-display text-4xl text-white"><a routerLink="/">{{title}}</a></h1>
+      <nav class="md:flex">
+        <ul class="md:flex">
+          <li><a class="px-4" routerLink="/menu">Menu</a></li>
+          <li><a class="px-4" routerLink="/">Locations</a></li>
+          <li><a class="px-4" routerLink="/order">Cart</a></li>
+        </ul>
+        <div>{{quantity$ | async}}</div>
+      </nav>
+    </header>
+    <section class="content">
+      <router-outlet />
+    </section>
+  </main>
+  `,
   styleUrl: './app.component.css'
 })
-export class AppComponent implements OnInit, OnDestroy {
-  title = 'veganfood';
-  salesTaxPercent: number;
-  foodItems$: Observable<FoodItem[]>;
-  order$?: Observable<OrderItem[]>;
+export class AppComponent implements OnInit {
+  title = 'Lotus Garden';
   quantity$?: Observable<number>;
-  subtotal: number;
-  total: string;
-  salesTax: string;
-  subtotalSub$: Subscription | undefined;
 
   constructor(private store: Store<AppState>) {
-    this.foodItems$ = this.store.select(state => state.foodItems.foodItems);
-    this.order$ = this.store.select(selectTransformedOrder);
     this.quantity$ = this.store.select(selectOrderTotalQuantity);
-    this.salesTaxPercent = 0.0725;
-    this.salesTax = '0';
-    this.subtotal = 0;
-    this.total = '0';
   }
 
   ngOnInit() {
     this.store.dispatch(FoodItemApiActions.loadFoodItems());
-    this.subtotalSub$ = this.store.pipe(select(selectOrderSubTotal)).subscribe((st: number) => {
-      this.subtotal = parseFloat((st).toFixed(2));
-      this.salesTax = this.formatAsUSD(this.calculateTax(this.subtotal, this.salesTaxPercent));
-      this.total = this.formatAsUSD(this.calculateTotal(this.subtotal, this.salesTaxPercent));
-    });
-  }
-
-  ngOnDestroy() {
-    if (this.subtotalSub$) {
-      this.subtotalSub$.unsubscribe();
-    }
-  }
-
-  submitOrder() {
-    this.order$?.pipe(take(1)).subscribe(orderItems => {
-      const items = orderItems.map(item => ({
-        _id: item._id,
-        quantity: item.quantity
-      }));
-      
-      fetch(`${environment.apiUrl}/create-checkout-session`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(items)
-      }).then(res => {
-        if (res.ok) return res.json();
-        return res.json().then(json => Promise.reject(json));
-      }).then(({ url }) => {
-        window.location = url;
-      }).catch(e => {
-        console.log(e.error)
-      });
-    });
-  }
-
-  calculateTax(amount: number, taxPercent: number) {
-    return taxPercent * amount;
-  };
-
-  calculateTotal(amount: number, taxPercent: number) {
-    return parseFloat((amount + this.calculateTax(amount, taxPercent)).toFixed(2));
-  };
-
-  formatAsUSD(amount: number): string {
-    return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(amount);
   }
 }
