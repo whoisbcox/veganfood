@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { AsyncPipe } from '@angular/common';
 import { Store, select } from '@ngrx/store';
 import { Observable, Subscription, map, take } from 'rxjs';
@@ -7,40 +7,57 @@ import { AppState } from '../../models/app.state';
 import { FoodItem } from '../../models/food-item';
 import { OrderItem } from '../../models/order-item';
 import { selectTransformedOrder, selectOrderTotalQuantity, selectOrderSubTotal } from '../../store/selectors/order.selectors';
-import { CloudinaryImage } from '@cloudinary/url-gen/assets/CloudinaryImage';
 import { fill } from '@cloudinary/url-gen/actions/resize';
 import { Cloudinary } from '@cloudinary/url-gen/index';
 import { CloudinaryModule } from '@cloudinary/ng';
+import { NgIconComponent, provideIcons } from '@ng-icons/core';
+import { matAddOutline, matMinusOutline } from '@ng-icons/material-icons/outline';
+import { FoodItemActions } from '../../store/actions/order.actions';
 
 @Component({
   selector: 'app-order-summary',
   standalone: true,
-  imports: [AsyncPipe, CloudinaryModule],
+  imports: [AsyncPipe, CloudinaryModule, NgIconComponent],
+  providers: [provideIcons({matMinusOutline, matAddOutline})],
   template: `
     <div class="container max-w-screen-lg mx-auto">
       <h1 class="font-display text-4xl text-green text-center">Order Summary</h1>
       @for(order of order$ | async; track order.key) {
         <div class="flex gap-4 p-4 border-b border-gray-200">
-          <figure class="rounded-full overflow-hidden">
+          <figure class="rounded-md overflow-hidden">
             <img [src]="getCloudinaryImage(order.image)" alt="Photo of {{order.name}}">
           </figure>
           <div class="flex flex-1 items-center gap-4">
             <div class="flex items-center gap-2">
-              <button class="w-6 h-6">-</button>
-              <div class="inline-flex flex-col justify-center w-6 h-6">{{ order.quantity }}</div>
-              <button class="w-6 h-6">+</button>
+              <button
+                class="w-7 h-7 flex flex-col justify-center items-center border-2 border-red-dark rounded-full"
+                (click)="foodItemRemoved(order._id)"
+              >
+                <ng-icon name="matMinusOutline"></ng-icon>
+              </button>
+              <div class="w-6 h-6 inline-flex flex-col justify-center items-center">{{ order.quantity }}</div>
+              <button
+                class="w-7 h-7 flex flex-col justify-center items-center border-2 border-red-dark rounded-full"
+                (click)="foodItemAdded(order._id)"
+              >
+                <ng-icon name="matAddOutline"></ng-icon>
+              </button>
             </div>
-            <div class="">{{ order.name }}</div>
-            <div class="flex-1 text-right">{{ order.price }}</div>
+            <div class="font-display text-2xl">{{ order.name }}</div>
+            <div class="flex-1 text-right">{{ 'x $' + order.price }}</div>
           </div>
         </div>
       }
-      <div class="text-right">
-        <div class="p-4">Subtotal: {{subtotal}}</div>
-        <!-- <div>Sales Tax (7.25%): {{salesTax}}</div> -->
-        <!-- <div>Total ($/USD): {{total}}</div> -->
-        <button class="mt-2 px-6 py-2 font-sans font-bold uppercase rounded-full border border-red" (click)="submitOrder()">Checkout</button>
-      </div>
+      @if(hasOrders) {
+        <div class="text-right">
+          <div class="p-4">Subtotal: {{ '$' + subtotal}}</div>
+          <!-- <div>Sales Tax (7.25%): {{salesTax}}</div> -->
+          <!-- <div>Total ($/USD): {{total}}</div> -->
+          <button class="mt-2 px-6 py-2 font-sans font-bold uppercase rounded-full border border-red" (click)="submitOrder()">Checkout</button>
+        </div>
+      } @else {
+        <div>Nothing to see here</div>
+      }
     </div>
   `,
   styleUrl: './order-summary.component.css'
@@ -55,6 +72,7 @@ export class OrderSummaryComponent implements OnInit, OnDestroy {
   salesTax: string;
   subtotalSub$: Subscription | undefined;
   cld: Cloudinary;
+  hasOrders: boolean = false;
 
   constructor(private store: Store<AppState>) {
     this.foodItems$ = this.store.select(state => state.foodItems.foodItems);
@@ -65,6 +83,7 @@ export class OrderSummaryComponent implements OnInit, OnDestroy {
     this.subtotal = 0;
     this.total = '0';
     this.cld = new Cloudinary({ cloud: { cloudName: environment.cloudName } });
+    this.order$.subscribe(items => (this.hasOrders = (0 < items.length)));
   }
 
   ngOnInit() {
@@ -79,6 +98,14 @@ export class OrderSummaryComponent implements OnInit, OnDestroy {
     if (this.subtotalSub$) {
       this.subtotalSub$.unsubscribe();
     }
+  }
+  
+  foodItemAdded(foodItemID: string) {
+    this.store.dispatch(FoodItemActions.foodItemAdded({foodItemID}));
+  }
+  
+  foodItemRemoved(foodItemID: string) {
+    this.store.dispatch(FoodItemActions.foodItemRemoved({foodItemID}));
   }
 
   getCloudinaryImage(imagePath: string): string {

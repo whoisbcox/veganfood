@@ -10,22 +10,28 @@ import { HomeComponent } from './layouts/home/home.component';
 import { OrderItem } from './models/order-item';
 import { FoodItem } from './models/food-item';
 import { environment } from '../environments/environment';
+import { NgIconComponent, provideIcons } from '@ng-icons/core';
+import { matTakeoutDiningOutline } from '@ng-icons/material-icons/outline';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [HomeComponent, RouterLink, RouterOutlet, AsyncPipe],
+  imports: [AsyncPipe, HomeComponent, NgIconComponent, RouterLink, RouterOutlet],
+  providers: [provideIcons({matTakeoutDiningOutline})],
   template: `
     <main>
     <header class="flex fixed justify-between md:items-center top-0 left-0 right-0 z-10 p-4 bg-deep-blue text-off-white">
       <h1 class="font-display text-4xl text-white"><a routerLink="/">{{title}}</a></h1>
       <nav class="md:flex">
         <ul class="md:flex">
-          <li><a class="px-4" routerLink="/menu">Menu</a></li>
-          <li><a class="px-4" routerLink="/">Locations</a></li>
-          <li><a class="px-4" routerLink="/order">Cart</a></li>
+          <li class="content-center"><a class="px-4" routerLink="/menu">Menu</a></li>
+          <li class="content-center"><a class="px-4" routerLink="/">Locations</a></li>
+          <li class="pl-3">
+            <a class="px-6 py-2 inline-flex items-center rounded-full bg-yellow-light text-deep-blue" routerLink="/order">
+              Order&ensp;<ng-icon name="matTakeoutDiningOutline" size="24px"></ng-icon> {{quantity$ | async}}
+            </a>
+          </li>
         </ul>
-        <div>{{quantity$ | async}}</div>
       </nav>
     </header>
     <section class="content">
