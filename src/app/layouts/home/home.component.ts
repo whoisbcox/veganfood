@@ -21,9 +21,9 @@ import { RouterLink } from '@angular/router';
     <section>
       <advanced-image [cldImg]="heroImg"></advanced-image>
       <div class="absolute top-1/2 left-0 right-0 -translate-y-1/2 text-center text-white">
-        <h1 class="font-display text-9xl">Headline</h1>
-        <p class="font-serif text-3xl">Description text</p>
-        <a class="inline-block mt-6 px-10 py-3 font-sans font-bold uppercase rounded-full border-2 border-off-white text-off-white" routerLink="/menu">Order Now</a>
+        <h1 class="font-display text-7xl">Peaceful Plates</h1>
+        <p class="font-serif text-3xl">Experience vegan cuisine in a serene atmosphere</p>
+        <a class="inline-block mt-6 px-10 py-3 font-sans font-bold uppercase rounded-full border-2 border-off-white text-off-white" routerLink="/menu">Order Pickup</a>
       </div>
     </section>
     <section class="container mx-auto pt-16 pb-28">
