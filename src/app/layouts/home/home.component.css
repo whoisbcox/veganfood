@@ -1,0 +1,4 @@
+.cld-banner-fit,
+.cld-banner-fit ::ng-deep img {
+  @apply w-full h-full object-cover;
+}

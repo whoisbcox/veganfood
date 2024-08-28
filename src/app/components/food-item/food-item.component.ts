@@ -13,11 +13,11 @@ import { environment } from '../../../environments/environment';
   standalone: true,
   imports: [CloudinaryModule],
   template: `
-    <div class="flex overflow-hidden rounded-tl-2xl rounded-tr-2xl rounded-br-2xl bg-yellow">
-      <div class="basis-2/5">
+    <div class="max-w-[380px] sm:max-w-none mx-auto sm:mx- sm:flex overflow-hidden rounded-tl-2xl rounded-tr-2xl rounded-br-2xl bg-yellow">
+      <div class="aspect-[4/3] sm:aspect-square sm:basis-2/5 md:basis-1/4 lg:basis-2/5">
         <advanced-image class="food-item__img object-cover" [cldImg]="img"></advanced-image>
       </div>
-      <div class="basis-3/5 p-4">
+      <div class="sm:basis-3/5 md:basis-3/4 lg:basis-3/5 p-4 sm:p-6 lg:p-4">
         <div class="flex justify-between items-baseline">
           <h2 class="food-item__title font-display text-2xl text-off-white">{{foodItem.name}}</h2>
           <p class="food-item__price font-display text-xl">{{'$' + foodItem.price}}</p>
@@ -42,7 +42,7 @@ export class FoodItemComponent {
   ngOnInit() {
     const cld = new Cloudinary({ cloud: { cloudName: environment.cloudName } });
     this.img = cld.image('veganfood/' + this.foodItem.image);
-    this.img.resize(fill().width(300).height(300));
+    this.img.resize(fill().width(640).height(640));
   }
 
   foodItemAdded(foodItemID: string) {

@@ -25,6 +25,7 @@
     "@cloudinary/ng": "^2.0.2",
     "@cloudinary/url-gen": "^1.19.0",
     "@ng-icons/core": "^29.3.0",
+    "@ng-icons/font-awesome": "^29.3.0",
     "@ng-icons/material-icons": "^29.3.0",
     "@ngrx/effects": "^18.0.1",
     "@ngrx/store": "^18.0.1",

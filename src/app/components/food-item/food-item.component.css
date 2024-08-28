@@ -1,3 +1,4 @@
+.food-item__img,
 .food-item__img ::ng-deep img {
-  @apply object-cover;
+  @apply w-full h-full object-cover;
 }

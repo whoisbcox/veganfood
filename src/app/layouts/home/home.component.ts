@@ -16,38 +16,29 @@ import { RouterLink } from '@angular/router';
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [FoodItemComponent, LocationComponent, CloudinaryModule, RouterLink],
+  imports: [CloudinaryModule, FoodItemComponent, LocationComponent, RouterLink],
   template: `
-    <section>
-      <advanced-image [cldImg]="heroImg"></advanced-image>
-      <div class="absolute top-1/2 left-0 right-0 -translate-y-1/2 text-center text-white">
-        <h1 class="font-display text-7xl">Peaceful Plates</h1>
-        <p class="font-serif text-3xl">Experience vegan cuisine in a serene atmosphere</p>
+    <section class="h-screen max-h-[540px] 2xl:max-h-[700px] bg-red relative">
+      <advanced-image class="cld-banner-fit" [cldImg]="heroImg"></advanced-image>
+      <div class="px-4 absolute top-1/2 left-0 right-0 -translate-y-1/2 text-center text-white">
+        <h1 class="font-display text-4xl md:text-5xl lg:text-7xl">Peaceful Plates</h1>
+        <p class="font-serif text-xl md:text-2xl lg:text-3xl">Experience vegan cuisine in a serene atmosphere</p>
         <a class="inline-block mt-6 px-10 py-3 font-sans font-bold uppercase rounded-full border-2 border-off-white text-off-white" routerLink="/menu">Order Pickup</a>
       </div>
     </section>
-    <section class="container mx-auto pt-16 pb-28">
-      <h2 class="mb-12 font-display text-7xl text-green text-center">Featured Items</h2>
-      <div class="grid grid-cols-2 gap-16">
+    <section class="max-w-7xl mx-auto py-16 md:pb-28 px-4 md:px-8">
+      <h2 class="mb-12 font-display text-4xl md:text-5xl lg:text-7xl text-green text-center">Featured Items</h2>
+      <div class="grid lg:grid-cols-2 gap-8 lg:gap-16">
         @for (featuredItem of featuredItemList; track featuredItem._id) {
-          <div class="">
-            <app-food-item [foodItem]="featuredItem"></app-food-item>
-          </div>
+          <app-food-item [foodItem]="featuredItem"></app-food-item>
         }
       </div>
-      <ul class="payment-types">
-        <li class="payment-type__applepay"><a href="#"></a></li>
-        <li class="payment-type__visa"><a href="#"></a></li>
-        <li class="payment-type__mastercard"><a href="#"></a></li>
-        <li class="payment-type__amex"><a href="#"></a></li>
-        <li class="payment-type__discover"><a href="#"></a></li>
-      </ul>
     </section>
-    <section class="h-screen min-h-[650px] block relative">
-      <advanced-image [cldImg]="locationImg" class="object-cover"></advanced-image>
-      <div class="container mx-auto absolute inset-0 flex flex-col justify-center text-white">
-        <h2 class="mb-12 font-display text-7xl text-white text-center">Locations</h2>
-        <div class="grid grid-cols-2 gap-16">
+    <section id="locations" class="h-screen min-h-[650px] block relative">
+      <advanced-image class="cld-banner-fit" [cldImg]="locationImg"></advanced-image>
+      <div class="max-w-7xl mx-auto absolute inset-0 flex flex-col justify-center text-white">
+        <h2 class="mb-12 font-display text-4xl md:text-5xl lg:text-7xl text-white text-center">Locations</h2>
+        <div class="px-4 md:p-8 grid md:grid-cols-2 gap-8 md:gap-16">
           @for (location of locations; track location.id) {
             <app-location [location]="location"></app-location>
           }
@@ -55,8 +46,8 @@ import { RouterLink } from '@angular/router';
       </div>
     <section>
     <section class="pt-16 pb-28 bg-deep-blue text-off-white text-center">
-      <h2 class="mb-12 font-display text-7xl text-yellow-light">Save Money With<br>Our Rewards Program</h2>
-      <form class="mx-auto inline-flex">
+      <h2 class="mb-12 font-display text-4xl md:text-5xl lg:text-7xl text-yellow-light">Save Money With<br>Our Rewards Program</h2>
+      <form class="mx-auto inline-flex translate-x-4">
         <input class="block min-w-64 pl-6 p-10 py-4 rounded-tl-full rounded-bl-full border border-yellow-light bg-transparent text-white placeholder:text-gray-400" type="email" name="email" placeholder="Enter your email address" />
         <button class="flex flex-col justify-center px-8 -translate-x-8 rounded-full bg-yellow-light text-deep-blue" type="submit">Sign Up</button>
       </form>

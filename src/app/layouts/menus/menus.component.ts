@@ -10,9 +10,9 @@ import { FoodItemComponent } from '../../components/food-item/food-item.componen
   imports: [FoodItemComponent],
   template: `
     <section class="">
-      <div class="container mx-auto py-16">
+      <div class="max-w-7xl mx-auto py-16 md:pb-28 px-4 md:px-8">
         <h2 class="mb-12 font-display text-7xl text-green text-center">Brunch</h2>
-        <div class="grid grid-cols-2 gap-12">
+        <div class="grid lg:grid-cols-2 gap-8 xl:gap-16">
           @for(brunchItem of brunchItemList; track brunchItem._id) {
             <app-food-item [foodItem]="brunchItem"></app-food-item>
           }
@@ -20,9 +20,9 @@ import { FoodItemComponent } from '../../components/food-item/food-item.componen
       </div>
     </section>
     <section class="bg-red-dark">
-      <div class="container mx-auto py-16">
+      <div class="max-w-7xl mx-auto py-16 md:pb-28 px-4 md:px-8">
         <h2 class="mb-12 font-display text-7xl text-yellow-light text-center">Dinner</h2>
-        <div class="grid grid-cols-2 gap-12">
+        <div class="grid lg:grid-cols-2 gap-8 xl:gap-16">
           @for(dinnerItem of dinnerItemList; track dinnerItem._id) {
             <app-food-item [foodItem]="dinnerItem"></app-food-item>
           }
@@ -30,9 +30,9 @@ import { FoodItemComponent } from '../../components/food-item/food-item.componen
       </div>
     </section>
     <section class="bg-deep-blue">
-      <div class="container mx-auto py-16">
+      <div class="max-w-7xl mx-auto py-16 md:pb-28 px-4 md:px-8">
         <h2 class="mb-12 font-display text-7xl text-green text-center">Drinks</h2>
-        <div class="grid grid-cols-2 gap-12">
+        <div class="grid lg:grid-cols-2 gap-8 xl:gap-16">
           @for(drinksItem of drinksItemList; track drinksItem._id) {
             <app-food-item [foodItem]="drinksItem"></app-food-item>
           }

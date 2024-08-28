@@ -7,8 +7,8 @@ import { Location } from '../../models/location';
   imports: [],
   template: `
     <div class="text-center">
-      <h3 class="font-display text-4xl">{{location.name}}</h3>
-      <h4 class="font-serif text-2xl">{{location.address}}</h4>
+      <h3 class="font-display text-2xl lg:text-4xl">{{location.name}}</h3>
+      <h4 class="font-serif text-xl lg:text-2xl">{{location.address}}</h4>
       <p>Hours: {{location.openTime}} &ndash; {{location.closeTime}}</p>
     </div>
   `,

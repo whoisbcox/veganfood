@@ -1,5 +1,6 @@
 import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { AsyncPipe } from '@angular/common';
+import { RouterLink } from '@angular/router';
 import { Store, select } from '@ngrx/store';
 import { Observable, Subscription, map, take } from 'rxjs';
 import { environment } from '../../../environments/environment';
@@ -11,14 +12,14 @@ import { fill } from '@cloudinary/url-gen/actions/resize';
 import { Cloudinary } from '@cloudinary/url-gen/index';
 import { CloudinaryModule } from '@cloudinary/ng';
 import { NgIconComponent, provideIcons } from '@ng-icons/core';
-import { matAddOutline, matMinusOutline } from '@ng-icons/material-icons/outline';
+import { matAddOutline, matMinusOutline, matSentimentDissatisfiedOutline } from '@ng-icons/material-icons/outline';
 import { FoodItemActions } from '../../store/actions/order.actions';
 
 @Component({
   selector: 'app-order-summary',
   standalone: true,
-  imports: [AsyncPipe, CloudinaryModule, NgIconComponent],
-  providers: [provideIcons({matMinusOutline, matAddOutline})],
+  imports: [AsyncPipe, CloudinaryModule, NgIconComponent, RouterLink],
+  providers: [provideIcons({matMinusOutline, matAddOutline, matSentimentDissatisfiedOutline})],
   template: `
     <div class="container max-w-screen-lg mx-auto">
       <h1 class="font-display text-4xl text-green text-center">Order Summary</h1>
@@ -56,7 +57,10 @@ import { FoodItemActions } from '../../store/actions/order.actions';
           <button class="mt-2 px-6 py-2 font-sans font-bold uppercase rounded-full border border-red" (click)="submitOrder()">Checkout</button>
         </div>
       } @else {
-        <div>Nothing to see here</div>
+        <div class="mt-10 text-center">
+          <ng-icon name="matSentimentDissatisfiedOutline" size="120"></ng-icon>
+          <p>Oh no! Your bag is empty. <a class="underline text-red-dark hover:text-red" routerLink="/menu">Visit our menu to start your order.</a></p>
+        </div>
       }
     </div>
   `,
