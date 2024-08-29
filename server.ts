@@ -27,6 +27,7 @@ const itemSchema = new Schema({
 
 // Create mongoose model
 const Item = model('Item', itemSchema);
+const mongodbServer = env['MONGO_DB']
 
 // Import Stripe library
 const stripeApiKey: string = env['STRIPE_PRIVATE_KEY'] as string;
@@ -158,7 +159,7 @@ export function app(): express.Express {
 
 async function run(): Promise<void> {
   try {
-    await mongoose.connect('mongodb+srv://whoisbcox:arMQPZUPYdmLTE9w@veganfood.qdagtdn.mongodb.net/veganfood?retryWrites=true&w=majority&appName=veganfood');
+    await mongoose.connect(mongodbServer);
     console.log('Connected to MongoDB');
 
     const port = process.env['PORT'] || 4000;
