@@ -10,15 +10,15 @@ import { ActivatedRoute } from '@angular/router';
       <div class="container max-w-screen-lg mx-auto">
         @if (success) {
           <h1 class="font-display text-4xl text-green text-center">Payment Successful!</h1>
-          <p class="mt-2 text-center">{{ pickupRange }}</p>
+          <p class="mt-4 text-center">{{ pickupRange }}</p>
         }
         @if (canceled) {
           <h1 class="font-display text-4xl text-green text-center">Payment Failed</h1>
-          <p class="mt-2 text-center">There was a problem with your payment. Please try again.</p>
+          <p class="mt-4 text-center">There was a problem with your payment. Please try again.</p>
         }
         @if (!success && !canceled) {
           <h1 class="font-display text-4xl text-green text-center">Order Status</h1>
-          <p class="mt-2 text-center">Check the payment status or try again.</p>
+          <p class="mt-4 text-center">Check the payment status or try again.</p>
         }
       </div>
     </div>
