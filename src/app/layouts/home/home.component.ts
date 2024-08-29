@@ -51,14 +51,14 @@ import { RouterLink } from '@angular/router';
         <input class="block min-w-64 pl-6 p-10 py-4 rounded-tl-full rounded-bl-full border border-yellow-light bg-transparent text-white placeholder:text-gray-400" type="email" name="email" placeholder="Enter your email address" />
         <button class="flex flex-col justify-center px-8 -translate-x-8 rounded-full bg-yellow-light text-deep-blue" type="submit">Sign Up</button>
       </form>
-      <ul class="social-links">
+      <!-- <ul class="social-links">
         <li class="social-link__instagram"><a href="#"></a></li>
         <li class="social-link__twitter-x"><a href="#"></a></li>
         <li class="social-link__facebook"><a href="#"></a></li>
         <li class="social-link__youtube"><a href="#"></a></li>
         <li class="social-link__tiktok"><a href="#"></a></li>
         <li class="social-link__linkedin"><a href="#"></a></li>
-      </ul>
+      </ul> -->
     </section>
   `,
   styleUrl: './home.component.css'
