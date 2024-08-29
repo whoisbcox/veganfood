@@ -72,7 +72,6 @@ export function app(): express.Express {
       console.log(filter);
 
       const items = await Item.find(filter);
-      // const items = await Item.find();
       res.status(200).json(items);
     } catch (error) {
       console.error('Error fetching items:', error);
@@ -117,12 +116,12 @@ export function app(): express.Express {
         };
       });
       
-      
+      const orderTime = new Date().toISOString();
       const session = await stripe.checkout.sessions.create({
         line_items: lineItems,
         mode: 'payment',
-        success_url: `${req.protocol}://${req.get('host')}?success=true`,
-        cancel_url: `${req.protocol}://${req.get('host')}?canceled=true`
+        success_url: `${req.protocol}://${req.get('host')}/order-status/?success=true&orderTime=${encodeURIComponent(orderTime)}`,
+        cancel_url: `${req.protocol}://${req.get('host')}/order-status/?canceled=true`
       });
 
       return res.json({ url: session.url });
