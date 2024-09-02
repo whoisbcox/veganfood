@@ -8,8 +8,8 @@ import { env } from 'process';
 import Stripe from 'stripe';
 import { createRequire } from 'module';
 const require = createRequire(import.meta.url);
-const cors = require('cors');
-const dotenv = require('dotenv');
+import cors from 'cors';
+import dotenv from 'dotenv';
 const mongoose = require('mongoose');
 const { model, Schema } = mongoose;
 
@@ -27,7 +27,7 @@ const itemSchema = new Schema({
 
 // Create mongoose model
 const Item = model('Item', itemSchema);
-const mongodbServer = env['MONGO_DB']
+const mongodbServer = env['MONGODB_URI']
 
 // Import Stripe library
 const stripeApiKey: string = env['STRIPE_PRIVATE_KEY'] as string;
