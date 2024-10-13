@@ -14,6 +14,7 @@ import { CloudinaryModule } from '@cloudinary/ng';
 import { NgIconComponent, provideIcons } from '@ng-icons/core';
 import { matAddOutline, matMinusOutline, matSentimentDissatisfiedOutline } from '@ng-icons/material-icons/outline';
 import { FoodItemActions } from '../../store/actions/order.actions';
+import { OrderService } from '../../services/order.service';
 
 @Component({
   selector: 'app-order-summary',
@@ -77,6 +78,7 @@ export class OrderSummaryComponent implements OnInit, OnDestroy {
   subtotalSub$: Subscription | undefined;
   cld: Cloudinary;
   hasOrders: boolean = false;
+  orderService: OrderService = inject(OrderService);
 
   constructor(private store: Store<AppState>) {
     this.foodItems$ = this.store.select(state => state.foodItems.foodItems);
@@ -124,20 +126,15 @@ export class OrderSummaryComponent implements OnInit, OnDestroy {
         _id: item._id,
         quantity: item.quantity
       }));
-      
-      fetch(`${environment.apiUrl}/create-checkout-session`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
+
+      this.orderService.createOrder(items).subscribe({
+        next: (res: { url: string; }) => {
+          console.log(res.url);
+          window.location.href = res.url;
         },
-        body: JSON.stringify(items)
-      }).then(res => {
-        if (res.ok) return res.json();
-        return res.json().then(json => Promise.reject(json));
-      }).then(({ url }) => {
-        window.location = url;
-      }).catch(e => {
-        console.log(e.error)
+        error: (err) => {
+          console.log(err);
+        }
       });
     });
   }
