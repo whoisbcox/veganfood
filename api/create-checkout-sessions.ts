@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import Stripe from 'stripe';
 import { connectToDatabase } from '../database';
 import { env } from 'process';
-import Item from '../models/item';
+import { Item } from '../models/item';
 
 
 export default async function createCheckoutSessions(req: Request, res: Response): Promise<void> {

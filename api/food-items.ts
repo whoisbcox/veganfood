@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import { connectToDatabase } from '../database';
-import Item from '../models/item';
+import { Item } from '../models/item';
 import { createRequire } from 'module';
 const require = createRequire(import.meta.url);
 const mongoose = require('mongoose');
