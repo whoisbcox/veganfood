@@ -1,11 +1,39 @@
-import { Request, Response } from 'express';
-import Stripe from 'stripe';
-import { connectToDatabase } from '../database';
 import { env } from 'process';
-import { Item } from '../models/item';
+import type { VercelRequest, VercelResponse } from '@vercel/node';
+import { createRequire } from 'module';
+import Stripe from 'stripe';
+const require = createRequire(import.meta.url);
+const mongoose = require('mongoose');
 
+let isConnected = false;
 
-export default async function createCheckoutSessions(req: Request, res: Response): Promise<void> {
+async function connectToDatabase() {
+  if (isConnected || mongoose.connection.readyState === 1) return;
+  
+  try {
+    await mongoose.connect(env['MONGODB_URI'] as string);
+    isConnected = true;
+    console.log('Connected to MongoDB');
+  } catch (error) {
+    console.error('Error connecting to MongoDB:', error);
+    throw error;
+  }
+}
+
+const { model, Schema, Document } = mongoose;
+
+const itemSchema = new Schema({
+  _id: { type: Schema.Types.ObjectId, default: () => new mongoose.Types.ObjectId() },
+  name: { type: String, required: true },
+  description: { type: String, required: true },
+  price: { type: Number, required: true },
+  type: { type: String, required: true },
+  image: { type: String, required: true }
+});
+
+const Item = model('Item', itemSchema);
+
+export default async function createCheckoutSessions(req: VercelRequest, res: VercelResponse) {
   const taxRateID = env['TAX_RATE_ID'] as string;
   const stripeApiKey = env['STRIPE_PRIVATE_KEY'] as string;
   const stripe = new Stripe(stripeApiKey, { apiVersion: '2024-06-20' });

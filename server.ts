@@ -10,8 +10,8 @@ import bootstrap from './src/main.server';
 import { env } from 'process';
 import cors from 'cors';
 
-import foodItems from './api/food-items';
-import createCheckoutSessions from './api/create-checkout-sessions';
+// import foodItems from './api/food-items';
+// import createCheckoutSessions from './api/create-checkout-sessions';
 
 // The Express app is exported so that it can be used by serverless Functions.
 export function app(): express.Express {
@@ -32,8 +32,8 @@ export function app(): express.Express {
   server.use(express.json());
   server.use(cors());
 
-  server.get('/api/food-items', foodItems);
-  server.post('/api/create-checkout-sessions', createCheckoutSessions);
+  // server.get('/api/food-items', foodItems);
+  // server.post('/api/create-checkout-sessions', createCheckoutSessions);
 
   
   // Serve static files from /browser
