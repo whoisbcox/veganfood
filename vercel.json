@@ -7,7 +7,7 @@
     },
     {
       "src": "/(.*)",
-      "dest": "server.ts"
+      "dest": "/dist/veganfood/server/server.mjs"
     }
   ]
 }
