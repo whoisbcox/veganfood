@@ -10,9 +10,6 @@ import bootstrap from './src/main.server';
 import { env } from 'process';
 import cors from 'cors';
 
-// import foodItems from './api/food-items';
-// import createCheckoutSessions from './api/create-checkout-sessions';
-
 // The Express app is exported so that it can be used by serverless Functions.
 export function app(): express.Express {
   const server = express();
